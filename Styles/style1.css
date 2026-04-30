@@ -4,12 +4,25 @@
     box-sizing: border-box;
 }
 
+body{
+    background-image: url("bg.jpeg");
+    background-size: cover; /* Estira y ajusta sin perder proporciones */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    height: 100vh; /* Altura total de la pantalla */
+}
 
 header{
     height: 75px;
     font-size: 2em;
-    border-bottom: 3px solid #333333;
-    box-shadow: #333333 0px 2px 5px;
+    border-bottom: 3px solid #000000;
+    box-shadow: #ffffff 0px 2px 5px;
+    background-color: rgb(0, 0, 0);
+    display: flex;
+}
+
+header img{
+    bottom: 20px;
 }
 
 .main{
@@ -32,7 +45,7 @@ header{
 }
 
 .container h2{
-    font-size: 2.5em;
+    font-size: 3.2em;
 
     
 }
@@ -45,14 +58,14 @@ header{
 
 .box{
     color: #FFFFFF;
-    background-color: #333333;
+    background-color: #000000;
     padding: 20px;
     border-radius: 10px;
     
 }
     
 .box-left{
-    color:  #333333;
+    color:  #ffffff;
     width: 60%;
     padding: 20px;
     border-radius: 10px;
@@ -61,13 +74,13 @@ header{
 
 .box-right{
     color: #FFFFFF;
-    background-color: #333333;
+    background-color: rgb(0, 0, 0);
     padding: 20px;
     width: 40%;
     border-radius: 10px;
-    text-align: right;
+    text-align: center;
     display: flex;
-    align-items: right;
+    align-items: center;
     flex-direction: column;
 }
 
@@ -76,7 +89,7 @@ header{
     display: flex;
     gap: 20px;
     flex-direction: column;
-    align-items: right;
+    align-items: center;
     padding: 20px;
 }
 
