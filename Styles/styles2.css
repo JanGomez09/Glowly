@@ -46,11 +46,15 @@ header img{
     padding: 20px;
 
     transition: all 0.3s ease;
+    transform: translate(0, 0);
 }
 
-.main:hover {
+.main2 {
     transform: translate(-300px);
 }
+
+
+
 
 .mContainer{
     display: flex;
@@ -126,3 +130,4 @@ header img{
 .box p{
     font-size: 1.2em;   
 }
+
