@@ -99,7 +99,7 @@ header img{
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 form label{
@@ -109,23 +109,27 @@ form label{
 }
 
 form input{
+    width: 80%;
     padding: 10px;
-    font-size: 1em;
-    border: none;
+    margin-bottom: 50px;
+    font-size: 1.5em;
+    background-color: transparent;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+    cursor: auto;
     border-radius: 20px;
-
-    width: 300px;
 }
 
 form button{
+    width: 80%;
     padding: 10px;
+    margin-bottom: 50px;
     font-size: 1.5em;
-    border: none;
-    width: 300px;
-    border-radius: 20px;
-    background-color: #FFFFFF;
-    color: #000000;
+    background-color: transparent;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
     cursor: pointer;
+    border-radius: 20px;
 
     
 }

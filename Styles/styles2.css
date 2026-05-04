@@ -50,10 +50,8 @@ header img{
 }
 
 .main2 {
-    transform: translate(-300px);
+    transform: translate(-340px);
 }
-
-
 
 
 .mContainer{
@@ -115,6 +113,7 @@ header img{
     border-radius: 30px;
     width: 95%;
 
+    
     border: 5px solid #000000;
    
 }
@@ -130,4 +129,43 @@ header img{
 .box p{
     font-size: 1.2em;   
 }
+
+.sidebar {
+    position: fixed;
+    left: 1920px;
+    top: 80px;
+    justify-self: right;
+    width: 340px;
+    height: calc(100% - 80px);
+    color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border: 5px solid #000000;
+    padding: 20px;
+    transition: left 0.3s ease;
+    z-index: 10;
+    text-align: right;
+}
+
+.sidebar-active {
+    left: 1580px;
+}
+
+
+.sidebar h2{
+    font-size: 2.8em;
+    margin-bottom: 20px;
+}
+
+.sidebar button{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 50px;
+    font-size: 1.5em;
+    background-color: transparent;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+    cursor: pointer;
+    border-radius: 20px;
+}   
 
