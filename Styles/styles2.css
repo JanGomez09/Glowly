@@ -59,7 +59,7 @@ header img{
     flex-direction: row;
     align-items: center;
     gap: 10px;
-    
+    width: 90%;
     padding: 20px;
 }
 
@@ -77,13 +77,18 @@ header img{
     color: #FFFFFF;
     
     background-color: rgba(0, 0, 0, 0.8);
-    padding: 20px;
+    padding: 50px;
     border-radius: 30px;
     width: 90%;
     
     border: 5px solid #000000;
 
     height: 50%;
+
+    width: 100%;
+
+    display: flex;
+    gap: 20px;
 }
 
 .box-right{
@@ -92,7 +97,7 @@ header img{
     background-color: rgba(0, 0, 0, 0.8);
     padding: 20px;
     border-radius: 30px;
-    width: 50%;
+    width: 49%;
     height: 100%;
     border: 5px solid #000000;
 }
@@ -102,9 +107,24 @@ header img{
 }
 
 .box-up p, .box-down p, .box-right p{
-    font-size: 1.2em;
+    padding-top: 10px;
+    font-size: 1.7em;
+    font-weight: bold;
 }
 
+
+.box-up button, .box-down button, .box-right button{
+  
+    padding: 10px;
+    font-size: 1.5em;
+    background-color: transparent;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+    cursor: pointer;
+    border-radius: 20px;
+
+    transition: 0.3s ease;
+}
 
 .box{
     color: #FFFFFF;
@@ -167,5 +187,14 @@ header img{
     color: #FFFFFF;
     cursor: pointer;
     border-radius: 20px;
+
+    transition: 0.3s ease;
 }   
+
+.sidebar button:hover{
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translate(-20px);
+}
+
+
 

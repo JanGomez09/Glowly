@@ -12,18 +12,26 @@
 <header>
     <h1 style="color:white;">Glowly</h1>
     <img width="111.6" height="89.4" src="Styles/Imgs/logos.png">
-    <button class="toggle">≡</button>
+
+    
+    <div style="display: flex; width: 100%; height: 100%; justify-content: right; gap: 20px; align-items: center;">
+        <button class="toggle">≡</button>
+        <img width="50" height="50" style="border-radius: 25px;" src="Styles/Imgs/pp.jpeg">
+    </div>
+
+    
 </header>
 
 <div class="sidebar" id="sidebar">
     <h2>Menu</h2>
     <br><br>
     <div>
-        <button>Inicio</button>
-        <button>Perfil</button>
-        <button>Consejeria</button>
-        <button>Simulador</button>
-        <button>Cerrar Session</button>
+        <button id="home">Inicio</button>
+        <button id="profile">Perfil</button>
+        <button id="counseling">Consejeria</button>
+        <button id="simulator">Simulador</button>
+        <button id="news">Noticias</button>
+        <button id="logout">Cerrar Session</button>
     </div>
 </div>
 
@@ -33,8 +41,9 @@
       
         <div class="box">
         
-            <h2>Bienvenido</h2>
+            <h2 id="welcome">Bienvenido</h2>
             <p>Como te gustaria que iniciemos?</p>
+            
             
         </div>
         <div class="mContainer">
@@ -42,22 +51,36 @@
 
                 <div class="box-up">
                     <h2>Perfil</h2>
-                    <p>Revisa tu perfil, junto a tu crecimiento y logros.</p>
+                    <div style="display: flex; width: 100%; height: 100%; justify-content: right; gap: 20px;">
+                        <p id="welcome">John Doe</p>
+                        <img width="50" height="50" style="border-radius: 25px;" src="Styles/Imgs/pp.jpeg">
+                        <button  id="profile">Ver Perfil</button>
+                    </div>
                 </div>
                 <div class="box-down">
                     <h2>Consejeria</h2>
-                    <p>No existen dudas absuradas, es por eso que cualquier duda o inconveniencia que tengas puedes consultarla con nuestro centro de consejeria. Y preguntarle a una IA bien entrenada cualquier cosa que te gustaria saber.</p>
+                    <div style=" width: 100%; height: 100%; display: flex; justify-content: right; gap: 20px;">
+                     
+                        <p id="welcome">Tienes dudas?</p>
+                        <button style="width: 55%;" id="counseling">Consultame</button>
+                        
+                    </div>
 
                 </div>
             </div>
             <div class="box-right">
                 <h2>Simulador de Inverciones</h2>
-                <p>No existen dudas absuradas, es por eso que cualquier duda o inconveniencia que tengas puedes consultarla con nuestro centro de consejeria. Y preguntarle a una IA bien entrenada cualquier cosa que te gustaria saber.</p>
+                
             </div>
                     
             
         </div>
-
+        <div class="box">
+        
+            <h2>Novedades del mundo Economico</h2>
+            <p>Enterate de las novedades de la economia y de las mejores formas de invertir en la actualidad.</p>
+            
+        </div>
     </div>
     <script src="Js/main.js"></script>
 </body>
