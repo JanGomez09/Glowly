@@ -1,200 +1,459 @@
-*{
+/* ===========================================================
+   Glowly · Dashboard (principal)
+   Mismo lenguaje visual que el login: oro sobre negro, serio,
+   moderno y profesional. Solo CSS — no cambia la estructura
+   de main.html ni la lógica de main.js (el menú sigue igual).
+   Filosofía Emil Kowalski: solo transform/opacity/filter,
+   easings propios, entradas ease-out, nada nace de scale(0).
+   =========================================================== */
+
+:root {
+    --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+    --gold-1: #ffe9a8;
+    --gold-2: #f5c542;
+    --gold-3: #c9920a;
+    --gold-grad: linear-gradient(135deg, var(--gold-1), var(--gold-2) 45%, var(--gold-3));
+
+    --ink:    #07060a;
+    --ink-2:  #0e0b14;
+    --line:   rgba(245, 197, 66, 0.16);
+    --text:   #f4f1ea;
+    --muted:  rgba(244, 241, 234, 0.60);
+
+    --glass:  rgba(20, 16, 28, 0.62);
+    --header-h: 80px;
+}
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
-    background-image: url("Imgs/bg.jpeg");
-    background-size: cover; /* Estira y ajusta sin perder proporciones */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    height: 100vh; /* Altura total de la pantalla */
+html, body { min-height: 100%; }
+
+body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background: radial-gradient(140% 120% at 50% -10%, #15101f 0%, var(--ink-2) 45%, var(--ink) 100%);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
-header{
-    height: 80px;
-    font-size: 2em;
-    border-bottom: 3px solid #000000;
-    box-shadow: #ffffff 0px 2px 5px;
-    background-color: rgb(0, 0, 0);
+/* ----------------------------------------------------------
+   FONDO ANIMADO (pseudo-elementos, sin tocar el HTML)
+   ---------------------------------------------------------- */
+
+/* Aurora dorada que respira y deriva lentamente */
+body::before {
+    content: "";
+    position: fixed;
+    inset: -30%;
+    z-index: -2;
+    background:
+        radial-gradient(38% 38% at 22% 28%, rgba(245, 197, 66, 0.18), transparent 60%),
+        radial-gradient(34% 34% at 80% 22%, rgba(201, 146, 10, 0.16), transparent 60%),
+        radial-gradient(44% 44% at 62% 82%, rgba(255, 233, 168, 0.10), transparent 60%);
+    filter: blur(50px);
+    animation: aurora 22s ease-in-out infinite alternate;
+}
+
+@keyframes aurora {
+    0%   { transform: translate3d(-3%, -2%, 0) scale(1);   opacity: 0.85; }
+    50%  { transform: translate3d(4%, 3%, 0)  scale(1.12); opacity: 1; }
+    100% { transform: translate3d(2%, -4%, 0) scale(1.05); opacity: 0.9; }
+}
+
+/* Rejilla técnica que deriva en bucle — sensación moderna/seria */
+body::after {
+    content: "";
+    position: fixed;
+    inset: -2px;
+    z-index: -1;
+    background-image:
+        linear-gradient(rgba(245, 197, 66, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245, 197, 66, 0.045) 1px, transparent 1px);
+    background-size: 52px 52px;
+    mask-image: radial-gradient(circle at 50% 38%, #000 0%, transparent 78%);
+    -webkit-mask-image: radial-gradient(circle at 50% 38%, #000 0%, transparent 78%);
+    animation: drift 26s linear infinite;
+}
+
+@keyframes drift {
+    to { transform: translate3d(52px, 52px, 0); }
+}
+
+/* ----------------------------------------------------------
+   HEADER
+   ---------------------------------------------------------- */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    height: var(--header-h);
     display: flex;
-
-    padding-left: 30px;
-    padding-right: 30px;
+    align-items: center;
+    gap: 14px;
+    padding: 0 30px;
+    font-size: 2em;
+    background: linear-gradient(180deg, rgba(10, 8, 14, 0.92), rgba(10, 8, 14, 0.72));
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 8px 30px -12px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    animation: drop-in 600ms var(--ease-out) both;
 }
 
-header button{
+@keyframes drop-in {
+    from { opacity: 0; transform: translateY(-100%); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+header h1 {
+    font-size: 0.8em;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    background: var(--gold-grad);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 6s linear infinite;
+}
+
+@keyframes shimmer { to { background-position: 220% 0; } }
+
+header > img {
+    width: 52px;
+    height: auto;
+    border-radius: 12px;
+    filter: drop-shadow(0 6px 16px rgba(245, 197, 66, 0.35));
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float { 50% { transform: translateY(-6px) rotate(-2deg); } }
+
+/* Botón del menú (≡) */
+header button,
+.toggle {
     margin-left: auto;
-    background-color: transparent;
-    border: none;
-    color: white;
-    font-size: 2em;
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    color: var(--gold-2);
+    font-size: 1em;
     cursor: pointer;
+    transition: transform 0.16s var(--ease-out), background 0.2s ease, border-color 0.2s ease, box-shadow 0.25s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+    .toggle:hover { background: rgba(245, 197, 66, 0.12); border-color: rgba(245, 197, 66, 0.45);
+        box-shadow: 0 8px 24px -10px rgba(245, 197, 66, 0.6); }
+}
+.toggle:active { transform: scale(0.94); }
+
+/* Avatar del header */
+header div img {
+    border-radius: 50%;
+    border: 2px solid rgba(245, 197, 66, 0.55);
+    box-shadow: 0 0 0 4px rgba(245, 197, 66, 0.10);
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+    header div img:hover { transform: scale(1.06); box-shadow: 0 0 0 6px rgba(245, 197, 66, 0.18); }
 }
 
-header img{
-    bottom: 20px;
-}
-
-.main{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    height: 90%;
-    padding: 20px;
-
-    transition: all 0.3s ease;
-    transform: translate(0, 0);
-}
-
-.main2 {
-    transform: translate(-340px);
-}
-
-
-.mContainer{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    width: 90%;
-    padding: 20px;
-}
-
-.container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 50px;
-    padding: 20px;
-    width: 47%;
-    height: 100%;
-}
-
-.box-up, .box-down{
-    color: #FFFFFF;
-    
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 50px;
-    border-radius: 30px;
-    width: 90%;
-    
-    border: 5px solid #000000;
-
-    height: 50%;
-
-    width: 100%;
-
-    display: flex;
-    gap: 20px;
-}
-
-.box-right{
-    color: #FFFFFF;
-    
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    border-radius: 30px;
-    width: 49%;
-    height: 100%;
-    border: 5px solid #000000;
-}
-
-.box-up h2, .box-down h2, .box-right h2{
-    font-size: 2.4em;
-}
-
-.box-up p, .box-down p, .box-right p{
-    padding-top: 10px;
-    font-size: 1.7em;
-    font-weight: bold;
-}
-
-
-.box-up button, .box-down button, .box-right button{
-  
-    padding: 10px;
-    font-size: 1.5em;
-    background-color: transparent;
-    border: 2px solid #FFFFFF;
-    color: #FFFFFF;
-    cursor: pointer;
-    border-radius: 20px;
-
-    transition: 0.3s ease;
-}
-
-.box{
-    color: #FFFFFF;
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    border-radius: 30px;
-    width: 95%;
-
-    
-    border: 5px solid #000000;
-   
-}
-    
-
-
-.box h2{
-    font-size: 2.8em;
-
-    
-}
-
-.box p{
-    font-size: 1.2em;   
-}
-
+/* ----------------------------------------------------------
+   MENÚ DESPLEGABLE (drawer derecho) — mismas clases que main.js
+   ---------------------------------------------------------- */
 .sidebar {
     position: fixed;
-    left: 1920px;
-    top: 80px;
-    justify-self: right;
+    top: var(--header-h);
+    right: 0;
     width: 340px;
-    height: calc(100% - 80px);
-    color: #FFFFFF;
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    border: 5px solid #000000;
-    padding: 20px;
-    transition: left 0.3s ease;
-    z-index: 10;
+    max-width: 86vw;
+    height: calc(100% - var(--header-h));
+    z-index: 25;
+    padding: 28px 24px;
+    color: var(--text);
     text-align: right;
+    background: linear-gradient(180deg, rgba(16, 12, 22, 0.96), rgba(8, 6, 12, 0.97));
+    border-left: 1px solid var(--line);
+    box-shadow: -30px 0 80px -30px rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transform: translateX(100%);
+    transition: transform 0.45s var(--ease-drawer);
 }
 
-.sidebar-active {
-    left: 1580px;
+/* main.js añade esta clase al pulsar ≡ */
+.sidebar-active { transform: translateX(0); }
+
+.sidebar h2 {
+    font-size: 1.4em;
+    font-weight: 800;
+    margin-bottom: 10px;
+    background: var(--gold-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
-
-.sidebar h2{
-    font-size: 2.8em;
-    margin-bottom: 20px;
-}
-
-.sidebar button{
+.sidebar button {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 50px;
-    font-size: 1.5em;
-    background-color: transparent;
-    border: 2px solid #FFFFFF;
-    color: #FFFFFF;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    font-size: 1rem;
+    text-align: right;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
     cursor: pointer;
-    border-radius: 20px;
+    transition: transform 0.25s var(--ease-out), background 0.25s ease, border-color 0.25s ease, color 0.2s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+    .sidebar button:hover {
+        transform: translateX(-8px);
+        background: rgba(245, 197, 66, 0.10);
+        border-color: rgba(245, 197, 66, 0.45);
+        color: var(--gold-1);
+    }
+}
+.sidebar button:active { transform: scale(0.97); }
 
-    transition: 0.3s ease;
-}   
-
-.sidebar button:hover{
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: translate(-20px);
+/* Botón de cerrar sesión: acento sutil al final */
+.sidebar #logout {
+    margin-top: 8px;
+    color: #ffb4a8;
+    border-color: rgba(255, 120, 100, 0.25);
+}
+@media (hover: hover) and (pointer: fine) {
+    .sidebar #logout:hover { background: rgba(255, 90, 70, 0.12); border-color: rgba(255, 120, 100, 0.5); color: #ffd2c9; }
 }
 
+/* ----------------------------------------------------------
+   CONTENIDO PRINCIPAL
+   ---------------------------------------------------------- */
+.main {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 28px 20px 40px;
+    transition: transform 0.45s var(--ease-drawer), filter 0.45s ease;
+}
 
+/* main.js alterna esta clase: el contenido se "empuja" con profundidad */
+.main2 {
+    transform: scale(0.97) translateX(-30px);
+    filter: brightness(0.7) saturate(0.9);
+}
 
+.mContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 20px;
+    width: min(1100px, 95%);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1 1 380px;
+}
+
+/* ---- Tarjetas (glassmorphism dorado) ---- */
+.box, .box-up, .box-down, .box-right {
+    color: var(--text);
+    background: var(--glass);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+    /* entrada escalonada */
+    opacity: 0;
+    transform: translateY(20px) scale(0.985);
+    animation: rise-in 650ms var(--ease-out) forwards;
+}
+
+.box {
+    width: min(1100px, 95%);
+    padding: 26px 30px;
+}
+
+.box-up, .box-down {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    padding: 32px;
+}
+
+.box-right {
+    flex: 1 1 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 32px;
+    overflow: hidden;
+}
+
+/* Retrasos del stagger */
+.main > .box:first-of-type { animation-delay: 120ms; }
+.box-up   { animation-delay: 220ms; }
+.box-down { animation-delay: 300ms; }
+.box-right{ animation-delay: 260ms; }
+.main > .box:last-of-type  { animation-delay: 380ms; }
+
+/* Hover de tarjetas */
+@media (hover: hover) and (pointer: fine) {
+    .box:hover, .box-up:hover, .box-down:hover, .box-right:hover {
+        transform: translateY(-5px) scale(1);
+        border-color: rgba(245, 197, 66, 0.40);
+        box-shadow: 0 40px 90px -38px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(245, 197, 66, 0.12) inset;
+    }
+}
+
+/* Acento dorado superior en las tarjetas grandes */
+.box { position: relative; overflow: hidden; }
+.box::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 24px; right: 24px;
+    height: 2px;
+    background: var(--gold-grad);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease-out);
+    opacity: 0.7;
+}
+.box:hover::before { transform: scaleX(1); }
+
+/* ---- Tipografía de tarjetas ---- */
+.box h2 {
+    font-size: 1.9em;
+    font-weight: 800;
+    line-height: 1.15;
+}
+.box p { font-size: 1.05em; color: var(--muted); margin-top: 8px; line-height: 1.55; }
+
+.box-up h2, .box-down h2, .box-right h2 {
+    font-size: 1.6em;
+    font-weight: 800;
+    background: var(--gold-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.box-up p, .box-down p, .box-right p { font-size: 1.05em; color: var(--text); font-weight: 600; }
+
+/* Filas internas (las que el HTML alinea a la derecha) */
+.box-up > div, .box-down > div { align-items: center; }
+
+.box-up img, .box-down img {
+    border-radius: 50%;
+    border: 2px solid rgba(245, 197, 66, 0.55);
+    box-shadow: 0 0 0 4px rgba(245, 197, 66, 0.10);
+}
+
+/* ---- Botones dentro de tarjetas ---- */
+.box-up button, .box-down button, .box-right button {
+    padding: 12px 18px;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: #1a1206;
+    background: var(--gold-grad);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 10px 26px -10px rgba(245, 197, 66, 0.55);
+    transition: transform 0.16s var(--ease-out), box-shadow 0.25s var(--ease-out), filter 0.2s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+    .box-up button:hover, .box-down button:hover, .box-right button:hover {
+        transform: translateY(-2px); filter: brightness(1.06);
+        box-shadow: 0 16px 36px -12px rgba(245, 197, 66, 0.7);
+    }
+}
+.box-up button:active, .box-down button:active, .box-right button:active { transform: scale(0.96); }
+
+/* ---- Decoración del Simulador (gráfico animado, solo visual) ---- */
+.box-right {
+    position: relative;
+    min-height: 260px;
+    justify-content: flex-start;
+}
+.box-right::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 62%;
+    background:
+        linear-gradient(180deg, transparent, rgba(245, 197, 66, 0.05)),
+        repeating-linear-gradient(90deg, rgba(245, 197, 66, 0.06) 0 1px, transparent 1px 44px);
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 60%);
+    mask-image: linear-gradient(180deg, transparent, #000 60%);
+    pointer-events: none;
+}
+/* Área de tendencia animada del simulador (decorativa, solo visual) */
+.box-right h2 { position: relative; z-index: 1; }
+.box-right::before {
+    content: "";
+    position: absolute;
+    left: 24px; right: 24px; bottom: 26px;
+    height: 110px;
+    background: linear-gradient(180deg, rgba(245, 197, 66, 0.35), rgba(245, 197, 66, 0));
+    clip-path: polygon(0 80%, 14% 66%, 28% 74%, 42% 44%, 56% 54%, 70% 26%, 84% 38%, 100% 8%, 100% 100%, 0 100%);
+    filter: drop-shadow(0 -2px 6px rgba(245, 197, 66, 0.45));
+    opacity: 0;
+    transform: translateY(10px);
+    animation: sim-in 1000ms var(--ease-out) 700ms forwards;
+}
+@keyframes sim-in { to { opacity: 1; transform: translateY(0); } }
+
+/* ----------------------------------------------------------
+   ENTRADA COMÚN
+   ---------------------------------------------------------- */
+@keyframes rise-in {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ----------------------------------------------------------
+   RESPONSIVE
+   ---------------------------------------------------------- */
+@media (max-width: 880px) {
+    .mContainer { flex-direction: column; }
+    .container, .box-right { flex: 1 1 auto; width: 100%; }
+    .box h2 { font-size: 1.6em; }
+}
+@media (max-width: 480px) {
+    header { padding: 0 16px; }
+    .main { padding: 18px 12px 32px; }
+    .box, .box-up, .box-down, .box-right { padding: 22px; }
+    .main2 { transform: scale(0.96); }   /* en móvil el drawer cubre; no empujar tanto */
+}
+
+/* ----------------------------------------------------------
+   MOVIMIENTO REDUCIDO (accesibilidad)
+   ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    header, .box, .box-up, .box-down, .box-right { opacity: 1 !important; transform: none !important; }
+}

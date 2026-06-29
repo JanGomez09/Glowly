@@ -1,59 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Styles/style1.css">
     <link rel="icon" type="image/x-icon" width="64" height="64" href="Styles/Imgs/logos.png">
     <script type="module" src="Js/index.js"></script>
-    <title>Glowly</title>
+    <script src="Js/effects.js" defer></script>
+    <title>Glowly · Inicia sesión</title>
 </head>
 
-<header>
-    <h1 style="color:white;">Glowly</h1>
-    <img width="111.6" height="89.4" src="Styles/Imgs/logos.png">
-</header>
-
 <body>
-    <div class="main">
-      
-        <div class="container">
-            <div class="box-left">
-                <h2 style="color:rgb(255, 255, 255);">Bienvenido a Glowly</h2>
-                <p style="color:rgb(255, 255, 255);">La plataforma de aprendizaje del rey Midas!</p>
-            </div>
-            <div class="box-right">
-                <h2>Inicia Sesion Porfavor</h2>
-                <p>Ingresa a tu cuenta para continuar y crecer sin limites.</p>
-                <div class="form-container">
-                    <form>
-                        <label >Usuario:</label>
-                        <br>
-                        <input id="user" type="text"  placeholder="Username">
-                      
-                        <br>
-                        <label >Correo Electronico:</label>
-                        <br>
-                        <input id="email" type="text"  placeholder="ejemplo@gmail.com">
-         
-                        <br>
-                        <label >Contraseña:</label>
-                        <br>
-                        <input id="pass"  type="password" placeholder="Contraseña">
-                
-                        <button onclick="logIn()">Iniciar Sesión</button>
-          
-                    </form>
-                </div>
-
-            </div>
-            
-        </div>
-         <div class="box">
-            <h2>Como? Aun no te has registrado con nosotros?</h2>
-            <p>Descuida, puedes crear una nueva cuenta en este enlace, para estar cada mas vez serca del crecimiento financiero.</p>
-        </div>
+    <!-- Capas de fondo animadas -->
+    <div class="bg" aria-hidden="true">
+        <div class="aurora"></div>
+        <div class="grid"></div>
+        <div class="orb orb--gold" data-parallax="0.04"></div>
+        <div class="orb orb--amber" data-parallax="0.07"></div>
+        <div class="particles" id="particles"></div>
     </div>
+
+    <main class="stage">
+        <section class="card" id="card">
+            <div class="card__shine" aria-hidden="true"></div>
+
+            <!-- Panel izquierdo: marca + simulador -->
+            <div class="brand">
+                <header class="brand__head">
+                    <img class="brand__logo" width="56" height="56" src="Styles/Imgs/logos.png" alt="Glowly">
+                    <span class="brand__name">Glowly</span>
+                </header>
+
+                <div class="brand__body">
+                    <h1 class="brand__title">
+                        Bienvenido a <span class="grad">Glowly</span>
+                    </h1>
+                    <p class="brand__tag">La plataforma de aprendizaje del rey&nbsp;Midas.</p>
+
+                    <!-- Gráfico de crecimiento animado (simulador de inversiones) -->
+                    <div class="chart" aria-hidden="true">
+                        <svg viewBox="0 0 320 120" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+                                    <stop offset="0" stop-color="#c9920a"/>
+                                    <stop offset="0.5" stop-color="#ffe9a8"/>
+                                    <stop offset="1" stop-color="#f5c542"/>
+                                </linearGradient>
+                                <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0" stop-color="rgba(245,197,66,0.35)"/>
+                                    <stop offset="1" stop-color="rgba(245,197,66,0)"/>
+                                </linearGradient>
+                            </defs>
+                            <path class="chart__area" d="M0,100 L40,86 L80,92 L120,64 L160,72 L200,42 L240,50 L280,22 L320,12 L320,120 L0,120 Z" fill="url(#fill)"/>
+                            <path class="chart__line" d="M0,100 L40,86 L80,92 L120,64 L160,72 L200,42 L240,50 L280,22 L320,12" fill="none" stroke="url(#line)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle class="chart__dot" cx="320" cy="12" r="4.5"/>
+                        </svg>
+                    </div>
+
+                    <div class="pitch">
+                        <p class="pitch__lead">Maneja tu dinero e invierte como un <span class="grad">profesional</span>.</p>
+                        <p class="pitch__text">Practica con estrategias reales. Cero riesgo.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel derecho: formulario (IDs intactos para Js/index.js) -->
+            <div class="login">
+                <div class="login__inner">
+                    <h2 class="login__title">Inicia sesión</h2>
+                    <p class="login__sub">Ingresa a tu cuenta para crecer sin límites.</p>
+
+                    <form class="form" autocomplete="off" novalidate>
+                        <div class="field">
+                            <input id="user" type="text" placeholder=" " autocomplete="username">
+                            <label for="user">Usuario</label>
+                            <span class="field__bar"></span>
+                        </div>
+
+                        <div class="field">
+                            <input id="email" type="email" placeholder=" " autocomplete="email">
+                            <label for="email">Correo electrónico</label>
+                            <span class="field__bar"></span>
+                        </div>
+
+                        <div class="field">
+                            <input id="pass" type="password" placeholder=" " autocomplete="current-password">
+                            <label for="pass">Contraseña</label>
+                            <span class="field__bar"></span>
+                            <button type="button" class="field__toggle" id="togglePass" aria-label="Mostrar contraseña">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+
+                        <button type="button" class="btn" id="loginBtn" onclick="logIn()">
+                            <span class="btn__label">Iniciar sesión</span>
+                            <span class="btn__shine" aria-hidden="true"></span>
+                        </button>
+                    </form>
+
+                    <p class="login__foot">
+                        ¿Aún no tienes cuenta?
+                        <a href="#" class="link">Regístrate aquí</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
-<!--Prueba-->
 </html>
